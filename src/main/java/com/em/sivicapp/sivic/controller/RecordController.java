@@ -3,7 +3,7 @@ package com.em.sivicapp.sivic.controller;
 import com.em.sivicapp.sivic.model.Record;
 import com.em.sivicapp.sivic.model.Game;
 import com.em.sivicapp.sivic.repository.GameRepo;
-import com.em.sivicapp.sivic.repository.Repo;
+import com.em.sivicapp.sivic.repository.RecordRepo;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -21,7 +21,7 @@ import java.util.List;
 public class RecordController {
 
     @Autowired
-    private Repo repo;
+    private RecordRepo repo;
 
     @Autowired
     private GameRepo gameRepo;
@@ -38,7 +38,7 @@ public class RecordController {
         g.setNewPrice(new BigDecimal(10));
         g.setOldPrice(new BigDecimal(11));
         g.setPercentage(new BigDecimal(10));
-        g.setDate(LocalDateTime.now());
+        g.setTar(LocalDateTime.now());
 
         repo.save(g);
         return "Saved";
