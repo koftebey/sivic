@@ -3,6 +3,7 @@ package com.em.sivicapp.sivic.controller;
 import com.em.sivicapp.sivic.model.Record;
 import com.em.sivicapp.sivic.model.Game;
 import com.em.sivicapp.sivic.repository.GameRepo;
+import com.em.sivicapp.sivic.service.GameService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -19,7 +20,7 @@ import java.util.List;
 public class GameController {
 
     @Autowired
-    private GameRepo gameRepo;
+    private GameService gameService;
 
     @PostMapping(path = "/add")
     public @ResponseBody
@@ -32,7 +33,7 @@ public class GameController {
         g.setName("deneme");
         g.setTar(LocalDateTime.now());
 
-        gameRepo.save(g);
+        gameService.save(g);
         return "Saved";
     }
 
@@ -40,78 +41,13 @@ public class GameController {
     public @ResponseBody
     Iterable<Game> getAllUsers() {
         // This returns a JSON or XML with the users
-        return gameRepo.findAll();
+        return gameService.findAll();
     }
 
     @GetMapping("/deneme")
     public String deneme() {
 
-        for (int ii = 0; ii < 400; ii++) {
-            System.out.println("selam " + ii + "as" + LocalDateTime.now());
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("selam " + ii + "as" + LocalDateTime.now());
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("selam " + ii + "as" + LocalDateTime.now());
-            String url = "https://eshop-prices.com/games/on-sale?currency=TRY&page=" + ii;
-            url = "https://eshop-prices.com/games?currency=TRY&page=" + ii;
-            List<Record> list = new ArrayList<>();
 
-            Document doc = null;
-            try {
-                System.out.println(">");
-                doc = Jsoup.connect(url).get();
-                System.out.println("+");
-            } catch (IOException e) {
-                System.out.println("- " + e.getMessage());
-                e.printStackTrace();
-            }
-            if (doc != null) {
-                Elements nameList = doc.select(".games-list-item-title h5");
-                Elements priceList = doc.select(".price .price-tag");
-
-                for (int i = 0; i < nameList.size(); i++) {
-                    String name = nameList.get(i).childNodes().get(0).toString();
-//                    String price = priceList.get(i).childNodes().get(0).toString().trim();
-
-//                    System.out.println(">>>price: " + price);
-
-//                    BigDecimal tut = null;
-
-//                    if(price!=null && !price.isBlank() && !price.isBlank()) {
-//                        String priceFormatted = price.substring(1).replaceAll(",", ".").trim();
-//                        tut = new BigDecimal(priceFormatted);
-//                    }
-                    Game g = new Game();
-                    //TODO: builder yap knk
-                    g.setName(name);
-                    //g.setNewPrice(tut);
-                    g.setTar(LocalDateTime.now());
-
-                    Game gg = gameRepo.findByName(name);
-
-
-                    System.out.println(gg);
-                    if (gg == null) {
-                        System.out.println("katdediyom knk bunu: " + g.getName());
-                        gameRepo.save(g);
-                    } else {
-                        System.out.println("aynisi varmis knk" + g.getName());
-                    }
-                }
-            } else {
-                System.out.println("dohuman yoh kanha");
-            }
-        }
-
-        System.out.println("kibcuseeyoubyes");
         return "k";
     }
 }

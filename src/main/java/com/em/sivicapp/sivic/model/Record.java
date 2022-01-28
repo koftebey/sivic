@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Record {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -17,7 +17,7 @@ public class Record {
     private BigDecimal oldPrice;
     private BigDecimal newPrice;
     private BigDecimal percentage;
-    private LocalDateTime date;
+    private LocalDateTime tar;
 
     //
 
@@ -30,7 +30,7 @@ public class Record {
                 ", oldPrice=" + oldPrice +
                 ", newPrice=" + newPrice +
                 ", percentage=" + percentage +
-                ", date=" + date +
+                ", date=" + tar +
                 '}';
     }
 
@@ -74,11 +74,11 @@ public class Record {
         this.percentage = percentage;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getTar() {
+        return tar;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setTar(LocalDateTime date) {
+        this.tar = date;
     }
 }
